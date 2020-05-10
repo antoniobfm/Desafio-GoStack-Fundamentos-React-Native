@@ -3,6 +3,8 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import { View } from 'react-native';
 
+import AsyncStorage from '@react-native-community/async-storage';
+
 import {
   Container,
   ProductContainer,
@@ -39,23 +41,26 @@ const Cart: React.FC = () => {
   const { increment, decrement, products } = useCart();
 
   function handleIncrement(id: string): void {
-    // TODO
+    increment(id);
   }
 
   function handleDecrement(id: string): void {
-    // TODO
+    decrement(id);
   }
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
-
-    return formatValue(0);
+    const totalzin = products.reduce((sum, item) => {
+      return sum + item.price * item.quantity;
+    }, 0);
+    return formatValue(totalzin);
   }, [products]);
 
   const totalItensInCart = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
+    const totalzin = products.reduce((sum, item) => {
+      return sum + item.quantity;
+    }, 0);
 
-    return 0;
+    return totalzin;
   }, [products]);
 
   return (
